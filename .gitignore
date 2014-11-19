@@ -1,0 +1,55 @@
+#############################################################################
+# Compilation made by xim/compumax from the following sources:              #
+# - Android Studio 0.9.2 default                                            #
+# - http://stackoverflow.com/questions/16736856/what-should-be-in-my-gitignore-for-an-android-studio-project
+# - http://stackoverflow.com/questions/16640566/which-files-shouldnt-be-checked-in-into-version-control-in-android-studio
+# - https://intellij-support.jetbrains.com/entries/23393067                 #
+# - https://github.com/github/gitignore                                     #
+# - https://github.com/google/iosched/blob/master/.gitignore                #
+#############################################################################
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+out/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX files
+.DS_Store
+
+# Eclipse project files
+.classpath
+.project
+
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle
+.idea
+*.iml
+
+# Old-style IDEA project files
+*.ipr
+*.iws
+
+.gradle
+build/
+
+# Gradle cache
+.gradle
+
+# Sandbox stuff
+_sandbox
