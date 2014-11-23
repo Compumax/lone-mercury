@@ -1,33 +1,30 @@
 package com.dsitelecom.xmontero.compumax.lonemercury;
 
-import java.util.HashMap;
-
+import android.graphics.Canvas;
 import android.graphics.Color;
 
 import com.kilobolt.framework.Game;
-import com.kilobolt.framework.Graphics;
 import com.kilobolt.framework.Screen;
+import com.kilobolt.framework.implementation.AndroidGraphics;
 
 public class ScreenDemo extends Screen
 {
 	LoneMercury game;
 
-	public long demoStartTime;
-	public long currentStageStartTime;
+	public TimeLine demoTimeLine;
+	public TimeLine stageTimeLine;
+
 	public int currentStage;
 	public int currentSubStage;
 
-	public String debugMessage;
-	public Boolean debug;
-
-	float x = 0;
+	public Debug debug;
 
 	Background background;
 	Blob mercury = new Blob();
 	Blob compumax = new Blob();
 	Blob presents = new Blob();
 
-	HashMap< String, Blob > blobs = new HashMap< String, Blob >();
+	//HashMap< String, Blob > blobs = new HashMap< String, Blob >();
 
 	public ScreenDemo( Game game )
 	{
@@ -35,14 +32,16 @@ public class ScreenDemo extends Screen
 
 		this.game = ( LoneMercury ) game;
 
-		demoStartTime = System.nanoTime();
-		currentStageStartTime = demoStartTime;
+		demoTimeLine = new TimeLine( System.nanoTime() );
+		stageTimeLine = new TimeLine( demoTimeLine.getStartTime() );
+
 		currentStage = 1;
 		currentSubStage = 1;
 
-		background = new Background( this );
+		debug = new Debug();
+		debug.setEnabled( true );
 
-		debug = true;
+		background = new Background( this );
 
 		mercury.image = Assets.planet;
 		compumax.image = Assets.compumax;
@@ -52,9 +51,17 @@ public class ScreenDemo extends Screen
 	@Override
 	public synchronized void update( float deltaTime )
 	{
-		debugMessage = "";
+		debug.clear();
+
+		demoTimeLine.setCurrentTime( System.nanoTime() );
+		stageTimeLine.setCurrentTime( demoTimeLine.getCurrentTime() );
+
+		debug.addMessage( "demo elapsed: " + Float.toString( demoTimeLine.getTotalElapsedInSeconds() ) );
+		debug.addMessage( "stage, sub: " + currentStage + ", " + currentSubStage );
+		debug.addMessage( "stage elapsed: " + Float.toString( stageTimeLine.getTotalElapsedInSeconds() ) );
 
 		background.update( this );
+		mercury.update( this );
 
 		switch( currentStage )
 		{
@@ -103,25 +110,32 @@ public class ScreenDemo extends Screen
 				break;
 		}
 
+		/*
 		for( HashMap.Entry< String, Blob > entry : blobs.entrySet() )
 		{
 			Blob blob = entry.getValue();
-			blob.update( deltaTime );
+			blob.update( this );
 		}
+		*/
 	}
 
 	@Override
 	public synchronized void paint( float deltaTime )
 	{
-		Graphics gfx = game.getGraphics();
+		AndroidGraphics gfx = ( AndroidGraphics ) game.getGraphics();
 
 		gfx.clearScreen( Color.rgb( background.red, background.green, background.blue ) );
+		Canvas canvas = gfx.getCanvas();
 
+		/*
 		for( HashMap.Entry< String, Blob > entry : blobs.entrySet() )
 		{
 			Blob blob = entry.getValue();
 			blob.paint( gfx );
 		}
+		*/
+
+		debug.paint( canvas );
 	}
 
 	@Override

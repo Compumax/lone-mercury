@@ -13,6 +13,6 @@ public class Background
 
 	public void update( ScreenDemo demo )
 	{
-		//
+		demo.debug.addMessage( "background: RGB( " + red + ", " + green + ", " + blue + " )"  );
 	}
 }

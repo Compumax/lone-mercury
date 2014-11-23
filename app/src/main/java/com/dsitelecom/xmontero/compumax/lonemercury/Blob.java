@@ -23,11 +23,11 @@ public class Blob
 	public float zoomSpeed = 0;
 	public float alphaSpeed = 0;
 
-	public void update( float deltaTime )
+	public void update( ScreenDemo demo )
 	{
 		float speed = 10;	// px/sec
-		float deltaPixels = speed * deltaTime;
-		centerX += deltaPixels;
+		//float deltaPixels = speed * deltaTime;
+		//centerX += deltaPixels;
 		System.out.println( "centerX: " + centerX );
 	}
 
