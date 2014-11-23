@@ -8,8 +8,8 @@ android {
         applicationId "com.dsitelecom.xmontero.compumax.lonemercury"
         minSdkVersion 8
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 1411200218
+        versionName "0.1.0"
     }
     buildTypes {
         release {
