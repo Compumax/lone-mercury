@@ -1,0 +1,27 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.dsitelecom.compumax.lonemercury">
+
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+
+	<application
+		android:allowBackup="true"
+		android:icon="@drawable/lone_mercury"
+		android:label="Lone Mercury"
+		android:theme="@style/AppTheme">
+
+		<activity
+			android:name="com.dsitelecom.xmontero.compumax.lonemercury.LoneMercury"
+			android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+			android:label="Lone Mercury"
+			android:screenOrientation="sensorLandscape">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+
+		</activity>
+
+	</application>
+
+</manifest>
