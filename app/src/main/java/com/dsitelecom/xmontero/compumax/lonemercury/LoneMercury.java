@@ -105,4 +105,9 @@ public class LoneMercury extends AndroidGame
 			}
 		}
 	}
+
+	public void end()
+	{
+		android.os.Process.killProcess( android.os.Process.myPid() );
+	}
 }

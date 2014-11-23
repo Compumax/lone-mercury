@@ -2,21 +2,24 @@ package com.dsitelecom.xmontero.compumax.lonemercury;
 
 import java.util.ArrayList;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.kilobolt.framework.Game;
-import com.kilobolt.framework.Graphics;
+import com.kilobolt.framework.implementation.AndroidGraphics;
 import com.kilobolt.framework.Screen;
-import com.kilobolt.framework.Graphics.ImageFormat;
 
 public class ScreenLoader extends Screen
 {
+	LoneMercury game;
 	boolean painted = false;
 
 	public ScreenLoader( Game game )
 	{
 		super( game );
+		this.game = ( LoneMercury ) game;
 	}
 
 	@Override
@@ -25,71 +28,71 @@ public class ScreenLoader extends Screen
 		if( painted )
 		{
 			Assets.load( game );
+			game.setScreen( new ScreenDemo( game ) );
 		}
-
-		/*
-		Graphics g = game.getGraphics();
-		Assets.splash = g.newImage( "splash.jpg", ImageFormat.RGB565 );
-		*/
-
-		game.setScreen( new ScreenDemo( game ) );
 	}
 
 	@Override
-	public void paint( float deltaTime )
+	public synchronized void paint( float deltaTime )
 	{
 		//-----------------------------------------------------------------//
 		// Draw "LOADING..." prior to loading any file, just with lines.   //
 		//-----------------------------------------------------------------//
 
-		synchronized( game )
-		{
-			Graphics g = game.getGraphics( );
-			int position = 0;
+		AndroidGraphics g = ( AndroidGraphics ) game.getGraphics();
+		Paint paint;
+		Canvas canvas;
 
-			g.clearScreen( Color.BLUE );
+		int position = 0;
 
-			drawLetter( 'L', position++, g );
-			drawLetter( 'O', position++, g );
-			drawLetter( 'A', position++, g );
-			drawLetter( 'D', position++, g );
-			drawLetter( 'I', position++, g );
-			drawLetter( 'N', position++, g );
-			drawLetter( 'G', position++, g );
-			drawLetter( '.', position++, g );
-			drawLetter( '.', position++, g );
-			drawLetter( '.', position++, g );
+		g.clearScreen( Color.BLUE );
 
-			painted = true;
-		}
+		canvas = g.getCanvas();
+		paint = g.getPaint();
+
+		paint.setColor( Color.WHITE );
+		paint.setStrokeWidth( 10 );
+
+		drawLetter( 'L', position++, canvas, paint );
+		drawLetter( 'O', position++, canvas, paint );
+		drawLetter( 'A', position++, canvas, paint );
+		drawLetter( 'D', position++, canvas, paint );
+		drawLetter( 'I', position++, canvas, paint );
+		drawLetter( 'N', position++, canvas, paint );
+		drawLetter( 'G', position++, canvas, paint );
+		drawLetter( '.', position++, canvas, paint );
+		drawLetter( '.', position++, canvas, paint );
+		drawLetter( '.', position++, canvas, paint );
+
+		painted = true;
 	}
 
 	@Override
-	public void pause( )
+	public void pause()
 	{
 	}
 
 	@Override
-	public void resume( )
+	public void resume()
 	{
 	}
 
 	@Override
-	public void dispose( )
+	public void dispose()
 	{
 	}
 
 	@Override
-	public void backButton( )
+	public void backButton()
 	{
-		android.os.Process.killProcess( android.os.Process.myPid( ) );
+		game.end();
 	}
 
 	//---------------------------------------------------------------------//
 	// Private.                                                            //
 	//---------------------------------------------------------------------//
 
-	private void drawLetter( char letter, int position, Graphics g )
+	private void drawLetter( char letter, int position, Canvas canvas, Paint paint )
 	{
 		int offsetX = 200;
 		int offsetY = 200;
@@ -108,7 +111,7 @@ public class ScreenLoader extends Screen
 			}
 		}
 
-		ArrayList< Line > lines = new ArrayList< Line >( );
+		ArrayList< Line > lines = new ArrayList< Line >();
 
 		switch( letter )
 		{
@@ -167,12 +170,14 @@ public class ScreenLoader extends Screen
 				break;
 		}
 
-		for( int i = 0; i < lines.size( ); i++ )
+		for( Line line : lines )
 		{
-			Line line = lines.get( i );
-			g.drawLine(
-					offsetX + line.start.x * spacing + position * spacing2, offsetY + line.start.y * spacing, offsetX + line.stop.x * spacing + position * spacing2, offsetY + line.stop.y * spacing, Color.WHITE
-			);
+			int x1 = offsetX + line.start.x * spacing + position * spacing2;
+			int y1 = offsetY + line.start.y * spacing;
+			int x2 = offsetX + line.stop.x * spacing + position * spacing2;
+			int y2 = offsetY + line.stop.y * spacing;
+
+			canvas.drawLine( x1, y1, x2, y2, paint );
 		}
 	}
 }

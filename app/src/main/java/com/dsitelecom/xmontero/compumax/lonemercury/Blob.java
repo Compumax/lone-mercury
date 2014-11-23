@@ -7,7 +7,7 @@ import com.kilobolt.framework.Image;
 
 public class Blob
 {
-	public final Image image;
+	public Image image;
 
 	public boolean enabled = true;
 
@@ -22,11 +22,6 @@ public class Blob
 	public float angularSpeed = 0;
 	public float zoomSpeed = 0;
 	public float alphaSpeed = 0;
-
-	public Blob( Image image )
-	{
-		this.image = image;
-	}
 
 	public void update( float deltaTime )
 	{

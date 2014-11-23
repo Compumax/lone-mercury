@@ -10,89 +10,139 @@ import com.kilobolt.framework.Screen;
 
 public class ScreenDemo extends Screen
 {
-	int stage = 1;
-	int subStage = 1;
+	LoneMercury game;
+
+	public long demoStartTime;
+	public long currentStageStartTime;
+	public int currentStage;
+	public int currentSubStage;
+
+	public String debugMessage;
+	public Boolean debug;
 
 	float x = 0;
 
-	HashMap< String, Blob > blobs = new HashMap< String, Blob >( );
+	Background background;
+	Blob mercury = new Blob();
+	Blob compumax = new Blob();
+	Blob presents = new Blob();
+
+	HashMap< String, Blob > blobs = new HashMap< String, Blob >();
 
 	public ScreenDemo( Game game )
 	{
 		super( game );
+
+		this.game = ( LoneMercury ) game;
+
+		demoStartTime = System.nanoTime();
+		currentStageStartTime = demoStartTime;
+		currentStage = 1;
+		currentSubStage = 1;
+
+		background = new Background( this );
+
+		debug = true;
+
+		mercury.image = Assets.planet;
+		compumax.image = Assets.compumax;
+		presents.image = Assets.presents;
 	}
 
 	@Override
-	public void update( float deltaTime )
+	public synchronized void update( float deltaTime )
 	{
-		synchronized( game )
+		debugMessage = "";
+
+		background.update( this );
+
+		switch( currentStage )
 		{
-			switch( stage )
-			{
-				case 1:
+			case 1:
 
-					updateStage1( );
-					break;
+				updateStage1();
+				break;
 
-				case 2:
+			case 2:
 
-					updateStage2( );
-					break;
+				updateStage2();
+				break;
 
-				case 3:
+			case 3:
 
-					updateStage3( );
-					break;
+				updateStage3();
+				break;
 
-				default:
+			case 4:
 
-					break;
-			}
+				updateStage4();
+				break;
+
+			case 5:
+
+				updateStage5();
+				break;
+
+			case 6:
+
+				updateStage6();
+				break;
+
+			case 7:
+
+				updateStage7();
+				break;
+
+			case 8:
+
+				updateStage8();
+				break;
+
+			default:
+
+				break;
 		}
 
-		for( HashMap.Entry< String, Blob > entry : blobs.entrySet( ) )
+		for( HashMap.Entry< String, Blob > entry : blobs.entrySet() )
 		{
-			Blob blob = entry.getValue( );
+			Blob blob = entry.getValue();
 			blob.update( deltaTime );
 		}
 	}
 
 	@Override
-	public void paint( float deltaTime )
+	public synchronized void paint( float deltaTime )
 	{
-		synchronized( game )
+		Graphics gfx = game.getGraphics();
+
+		gfx.clearScreen( Color.rgb( background.red, background.green, background.blue ) );
+
+		for( HashMap.Entry< String, Blob > entry : blobs.entrySet() )
 		{
-			Graphics gfx = game.getGraphics( );
-
-			gfx.clearScreen( Color.BLACK );
-
-			for( HashMap.Entry< String, Blob > entry : blobs.entrySet( ) )
-			{
-				Blob blob = entry.getValue( );
-				blob.paint( gfx );
-			}
+			Blob blob = entry.getValue();
+			blob.paint( gfx );
 		}
 	}
 
 	@Override
-	public void pause( )
+	public void pause()
 	{
 	}
 
 	@Override
-	public void resume( )
+	public void resume()
 	{
 	}
 
 	@Override
-	public void dispose( )
+	public void dispose()
 	{
 	}
 
 	@Override
-	public void backButton( )
+	public void backButton()
 	{
-		android.os.Process.killProcess( android.os.Process.myPid( ) );
+		game.end();
 	}
 
 	//---------------------------------------------------------------------//
@@ -101,44 +151,74 @@ public class ScreenDemo extends Screen
 
 	//-- Stage 1 ----------------------------------------------------------//
 
-	private void updateStage1( )
+	private void updateStage1()
 	{
-		switch( subStage )
+		switch( currentSubStage )
 		{
 			case 1:
 
-				updateStage1SubStage1( );
+				updateStage1SubStage1();
 				break;
 
 			case 2:
 
-				updateStage1SubStage2( );
+				updateStage1SubStage2();
 				break;
 		}
 	}
 
-	private void updateStage1SubStage1( )
+	private void updateStage1SubStage1()
 	{
 		// Create Planet
-		Blob planet = new Blob( Assets.planet );
-		blobs.put( "planet", planet );
-		subStage = 2;
+		//Blob planet = new Blob( Assets.planet );
+		//blobs.put( "planet", planet );
+		currentSubStage = 2;
 	}
 
-	private void updateStage1SubStage2( )
+	private void updateStage1SubStage2()
 	{
 		// Move and zoom planet
 	}
 
 	//-- Stage 2 ----------------------------------------------------------//
 
-	private void updateStage2( )
+	private void updateStage2()
 	{
 	}
 
 	//-- Stage 3 ----------------------------------------------------------//
 
-	private void updateStage3( )
+	private void updateStage3()
+	{
+	}
+
+	//-- Stage 4 ----------------------------------------------------------//
+
+	private void updateStage4()
+	{
+	}
+
+	//-- Stage 5 ----------------------------------------------------------//
+
+	private void updateStage5()
+	{
+	}
+
+	//-- Stage 6 ----------------------------------------------------------//
+
+	private void updateStage6()
+	{
+	}
+
+	//-- Stage 7 ----------------------------------------------------------//
+
+	private void updateStage7()
+	{
+	}
+
+	//-- Stage 8 ----------------------------------------------------------//
+
+	private void updateStage8()
 	{
 	}
 }
