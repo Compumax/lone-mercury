@@ -20,9 +20,9 @@ public class ScreenDemo extends Screen
 	public Debug debug;
 
 	Background background;
-	Blob mercury = new Blob();
-	Blob compumax = new Blob();
-	Blob presents = new Blob();
+	Blob mercury = new Blob( "mercury" );
+	Blob compumax = new Blob( "compumax" );
+	Blob presents = new Blob( "presents" );
 
 	//HashMap< String, Blob > blobs = new HashMap< String, Blob >();
 
@@ -43,9 +43,11 @@ public class ScreenDemo extends Screen
 
 		background = new Background( this );
 
+		/*
 		mercury.image = Assets.planet;
 		compumax.image = Assets.compumax;
 		presents.image = Assets.presents;
+		*/
 	}
 
 	@Override
@@ -126,6 +128,8 @@ public class ScreenDemo extends Screen
 
 		gfx.clearScreen( Color.rgb( background.red, background.green, background.blue ) );
 		Canvas canvas = gfx.getCanvas();
+
+		mercury.paint( canvas );
 
 		/*
 		for( HashMap.Entry< String, Blob > entry : blobs.entrySet() )

@@ -1,14 +1,12 @@
 package com.dsitelecom.xmontero.compumax.lonemercury;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
-
-import com.kilobolt.framework.Graphics;
-import com.kilobolt.framework.Image;
+import android.graphics.Paint;
 
 public class Blob
 {
-	public Image image;
-
+	public String name;
 	public boolean enabled = true;
 
 	public float centerX = 0;
@@ -23,18 +21,36 @@ public class Blob
 	public float zoomSpeed = 0;
 	public float alphaSpeed = 0;
 
-	public void update( ScreenDemo demo )
+	public Blob( String name )
 	{
-		float speed = 10;	// px/sec
-		//float deltaPixels = speed * deltaTime;
-		//centerX += deltaPixels;
-		System.out.println( "centerX: " + centerX );
+		this.name = name;
 	}
 
-	public void paint( Graphics gfx )
+	public void update( ScreenDemo demo )
 	{
-		int x = Math.round( centerX );
+		float speed = 10; // px/sec
+		float deltaPixels = speed * demo.demoTimeLine.getIterationElapsedInSeconds();
+		centerX += deltaPixels;
+		demo.debug.addMessage( name + ".centerX: " + centerX );
+	}
 
-		gfx.drawRect( x, 0, 100, 100, Color.YELLOW );
+	public void paint( Canvas canvas )
+	{
+		Paint paint = new Paint();
+		paint.setColor( Color.YELLOW );
+		paint.setStyle( Paint.Style.STROKE );
+
+		int x = Math.round( centerX );
+		canvas.drawRect( x, 0, getWidth() + x, getHeight(), paint );
+	}
+
+	public int getWidth()
+	{
+		return 100;
+	}
+
+	public int getHeight()
+	{
+		return 200;
 	}
 }
