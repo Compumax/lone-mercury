@@ -46,6 +46,7 @@ public class ScreenDemo extends Screen
 		mercury.initialPosition.centerX = 1280;
 		mercury.initialPosition.centerY = 200;
 		mercury.initialPosition.time = 0;
+		mercury.interpolationMode = Blob.InterpolationMode.Sinus;
 		mercury.targetPosition.centerX = 640;
 		mercury.targetPosition.centerY = 400;
 		mercury.targetPosition.time = 30;

@@ -23,17 +23,39 @@ public class BlobVector
 		alpha = 1;
 	}
 
-	public void interpolate( BlobVector start, BlobVector stop, float time )
+	public void interpolate( BlobVector start, BlobVector stop, float time, Blob.InterpolationMode interpolationMode, Debug debug )
 	{
 		float interval = stop.time - start.time;
 		float elapsed = time - start.time;
-		float factor = elapsed / interval;
+		float linearFactor = elapsed / interval;
+		float interpolationFactor;
 
-		centerX = interpolateDimension( start.centerX, stop.centerX, factor );
-		centerY = interpolateDimension( start.centerY, stop.centerY, factor );
-		angle = interpolateDimension( start.angle, stop.angle, factor );
-		zoom = interpolateDimension( start.zoom, stop.zoom, factor );
-		alpha = interpolateDimension( start.alpha, stop.alpha, factor );
+		switch( interpolationMode )
+		{
+			case Linear:
+
+				interpolationFactor = linearFactor;
+				break;
+
+			case Sinus:
+
+				double interpolationAngle = Math.PI / 2 * linearFactor;
+				interpolationFactor = ( float ) Math.sin( interpolationAngle );
+				debug.addMessage( "interpolationAngle/Factor: " + interpolationAngle + "/" + interpolationFactor );
+				break;
+
+			default:
+
+				interpolationFactor = 1;
+				break;
+		}
+
+		centerX = interpolateDimension( start.centerX, stop.centerX, interpolationFactor );
+		centerY = interpolateDimension( start.centerY, stop.centerY, interpolationFactor );
+		angle = interpolateDimension( start.angle, stop.angle, interpolationFactor );
+		zoom = interpolateDimension( start.zoom, stop.zoom, interpolationFactor );
+		alpha = interpolateDimension( start.alpha, stop.alpha, interpolationFactor );
+
 	}
 
 	static public float interpolateDimension( float start, float stop, float factor )

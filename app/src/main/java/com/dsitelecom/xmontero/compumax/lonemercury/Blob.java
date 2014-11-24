@@ -7,12 +7,19 @@ import android.graphics.Rect;
 
 public class Blob
 {
+	public enum InterpolationMode
+	{
+		Linear,
+		Sinus
+	}
+
 	public String name;
 	public boolean enabled = true;
 
 	public BlobVector initialPosition = new BlobVector();
 	public BlobVector currentPosition = new BlobVector();
 	public BlobVector targetPosition = new BlobVector();
+	public InterpolationMode interpolationMode = InterpolationMode.Linear;
 
 	public Blob( String name )
 	{
@@ -21,22 +28,35 @@ public class Blob
 
 	public void update( ScreenDemo demo )
 	{
-		float currentTime = demo.demoTimeLine.getTotalElapsedInSeconds();
-		currentPosition.interpolate( initialPosition, targetPosition, currentTime );
+		if( enabled )
+		{
+			float currentTime = demo.demoTimeLine.getTotalElapsedInSeconds();
 
-		demo.debug.addMessage( name + ".initial/current/targetPosition: " + initialPosition.toString() + " / " + currentPosition.toString() + " / " + targetPosition );
+			if( currentTime < targetPosition.time )
+			{
+				currentPosition.interpolate( initialPosition, targetPosition, currentTime, interpolationMode, demo.debug );
+				demo.debug.addMessage( name + ".initial/current/targetPosition/mode: " + initialPosition.toString() + " / " + currentPosition.toString() + " / " + targetPosition + " / " + interpolationMode.toString() );
+			}
+			else
+			{
+				demo.debug.addMessage( name + ".current: " + currentPosition.toString() );
+			}
+		}
 	}
 
 	public void paint( Canvas canvas )
 	{
-		Paint paint = new Paint();
-		paint.setColor( Color.YELLOW );
-		paint.setStyle( Paint.Style.STROKE );
+		if( enabled )
+		{
+			Paint paint = new Paint();
+			paint.setColor( Color.YELLOW );
+			paint.setStyle( Paint.Style.STROKE );
 
-		int x = Math.round( currentPosition.centerX );
-		int y = Math.round( currentPosition.centerY );
+			int x = Math.round( currentPosition.centerX );
+			int y = Math.round( currentPosition.centerY );
 
-		canvas.drawRect( x - getWidth() / 2, y - getHeight() / 2, x + getWidth() / 2, y + getHeight() / 2, paint );
+			canvas.drawRect( x - getWidth() / 2, y - getHeight() / 2, x + getWidth() / 2, y + getHeight() / 2, paint );
+		}
 	}
 
 	public int getWidth()
