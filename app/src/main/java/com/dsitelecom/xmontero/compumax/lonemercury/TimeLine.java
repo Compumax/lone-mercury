@@ -5,12 +5,14 @@ public class TimeLine
 	private long startTime;
 	private long lastIterationTime;
 	private long currentTime;
+	private int frames;
 
 	public TimeLine( long startTime )
 	{
 		this.startTime = startTime;
 		this.lastIterationTime = startTime;
 		this.currentTime = startTime;
+		this.frames = 0;
 	}
 
 	public long getStartTime()
@@ -43,10 +45,11 @@ public class TimeLine
 		return getIterationElapsedInNanos() / 1000000000.0f;
 	}
 
-	public void setCurrentTime( long currentTime )
+	public synchronized void setCurrentTime( long currentTime )
 	{
 		this.lastIterationTime = this.currentTime;
 		this.currentTime = currentTime;
+		this.frames++;
 	}
 
 	public long getCurrentTime()
@@ -57,5 +60,15 @@ public class TimeLine
 	public long getLastIterationTime()
 	{
 		return lastIterationTime;
+	}
+
+	public int getFrames()
+	{
+		return frames;
+	}
+
+	public float getFps()
+	{
+		return frames / getTotalElapsedInSeconds();
 	}
 }

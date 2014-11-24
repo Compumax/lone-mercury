@@ -43,6 +43,13 @@ public class ScreenDemo extends Screen
 
 		background = new Background( this );
 
+		mercury.initialPosition.centerX = 1280;
+		mercury.initialPosition.centerY = 200;
+		mercury.initialPosition.time = 0;
+		mercury.targetPosition.centerX = 640;
+		mercury.targetPosition.centerY = 400;
+		mercury.targetPosition.time = 30;
+
 		/*
 		mercury.image = Assets.planet;
 		compumax.image = Assets.compumax;
@@ -58,7 +65,7 @@ public class ScreenDemo extends Screen
 		demoTimeLine.setCurrentTime( System.nanoTime() );
 		stageTimeLine.setCurrentTime( demoTimeLine.getCurrentTime() );
 
-		debug.addMessage( "demo elapsed: " + Float.toString( demoTimeLine.getTotalElapsedInSeconds() ) );
+		debug.addMessage( "demo frames/fps/elapsed: " + Float.toString( demoTimeLine.getFrames() ) + "/" + Float.toString( demoTimeLine.getFps() ) + "/" + Float.toString( demoTimeLine.getTotalElapsedInSeconds() ) );
 		debug.addMessage( "stage, sub: " + currentStage + ", " + currentSubStage );
 		debug.addMessage( "stage elapsed: " + Float.toString( stageTimeLine.getTotalElapsedInSeconds() ) );
 

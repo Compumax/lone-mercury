@@ -3,23 +3,16 @@ package com.dsitelecom.xmontero.compumax.lonemercury;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class Blob
 {
 	public String name;
 	public boolean enabled = true;
 
-	public float centerX = 0;
-	public float centerY = 0;
-	public float angle = 0;
-	public float zoom = 1;
-	public float alpha = 1;
-
-	public float speedX = 0;
-	public float speedY = 0;
-	public float angularSpeed = 0;
-	public float zoomSpeed = 0;
-	public float alphaSpeed = 0;
+	public BlobVector initialPosition = new BlobVector();
+	public BlobVector currentPosition = new BlobVector();
+	public BlobVector targetPosition = new BlobVector();
 
 	public Blob( String name )
 	{
@@ -28,10 +21,10 @@ public class Blob
 
 	public void update( ScreenDemo demo )
 	{
-		float speed = 10; // px/sec
-		float deltaPixels = speed * demo.demoTimeLine.getIterationElapsedInSeconds();
-		centerX += deltaPixels;
-		demo.debug.addMessage( name + ".centerX: " + centerX );
+		float currentTime = demo.demoTimeLine.getTotalElapsedInSeconds();
+		currentPosition.interpolate( initialPosition, targetPosition, currentTime );
+
+		demo.debug.addMessage( name + ".initial/current/targetPosition: " + initialPosition.toString() + " / " + currentPosition.toString() + " / " + targetPosition );
 	}
 
 	public void paint( Canvas canvas )
@@ -40,8 +33,10 @@ public class Blob
 		paint.setColor( Color.YELLOW );
 		paint.setStyle( Paint.Style.STROKE );
 
-		int x = Math.round( centerX );
-		canvas.drawRect( x, 0, getWidth() + x, getHeight(), paint );
+		int x = Math.round( currentPosition.centerX );
+		int y = Math.round( currentPosition.centerY );
+
+		canvas.drawRect( x - getWidth() / 2, y - getHeight() / 2, x + getWidth() / 2, y + getHeight() / 2, paint );
 	}
 
 	public int getWidth()
@@ -51,6 +46,6 @@ public class Blob
 
 	public int getHeight()
 	{
-		return 200;
+		return 100;
 	}
 }
