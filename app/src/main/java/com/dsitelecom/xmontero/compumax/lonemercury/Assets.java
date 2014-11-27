@@ -15,6 +15,8 @@ public class Assets
 	//public static Sound click;
 	//public static Music theme;
 
+	public static String scrollText;
+
 	public static void load( Game loneMercury )
 	{
 		//theme = loneMercury.getAudio().createMusic( "menutheme.mp3" );
@@ -31,4 +33,45 @@ public class Assets
 		Assets.mercury = gfx.newImage( "img/mercury.png", ImageFormat.ARGB4444 );
 		*/
 	}
+
+	// TODO: Read the scroll text from a file.
+	// Moved outside the demo.
+
+	//InputStream inputStream = getResources().openRawResource( R.raw.scroll );
+	//scrollText = convertStreamToString( inputStream );
+
+	/*
+	private static String convertStreamToString( InputStream inputStream )
+	{
+		BufferedReader reader = new BufferedReader( new InputStreamReader( inputStream ) );
+		StringBuilder stringBuilder = new StringBuilder();
+
+		String line = null;
+
+		try
+		{
+			while( ( line = reader.readLine() ) != null )
+			{
+				stringBuilder.append( ( line + "\n" ) );
+			}
+		}
+		catch( IOException e )
+		{
+			Log.w( "LOG", e.getMessage() );
+		}
+		finally
+		{
+			try
+			{
+				inputStream.close();
+			}
+			catch( IOException e )
+			{
+				Log.w( "LOG", e.getMessage() );
+			}
+		}
+
+		return stringBuilder.toString();
+	}
+	*/
 }
