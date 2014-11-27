@@ -7,6 +7,8 @@ import com.kilobolt.framework.Music;
 import com.kilobolt.framework.Sound;
 import com.kilobolt.framework.Graphics.ImageFormat;
 
+import java.util.concurrent.TimeUnit;
+
 public class Assets
 {
 	public static Image planet;
@@ -24,9 +26,25 @@ public class Assets
 		//theme.setVolume( 0.85f );
 		//theme.play();
 
-		/*
+		System.out.println( "Before GfxLoad" );
+
 		Graphics gfx = loneMercury.getGraphics( );
 		Assets.planet = gfx.newImage( "img/planet.png", ImageFormat.ARGB4444 );
+
+		System.out.println( "Before Sleep" );
+
+		try
+		{
+			TimeUnit.MILLISECONDS.sleep( 500 );
+		}
+		catch( InterruptedException e )
+		{
+			Thread.currentThread().interrupt();
+		}
+
+		System.out.println( "After Sleep" );
+
+		/*
 		Assets.compumax = gfx.newImage( "img/compumax.png", ImageFormat.ARGB4444 );
 		Assets.presents = gfx.newImage( "img/presents.png", ImageFormat.ARGB4444 );
 		Assets.lone = gfx.newImage( "img/lone.png", ImageFormat.ARGB4444 );
