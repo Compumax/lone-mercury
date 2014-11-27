@@ -165,12 +165,6 @@ public class ScreenDemo extends Screen
 	{
 	}
 
-	@Override
-	public void backButton()
-	{
-		game.end();
-	}
-
 	//---------------------------------------------------------------------//
 	// Private updaters                                                    //
 	//---------------------------------------------------------------------//

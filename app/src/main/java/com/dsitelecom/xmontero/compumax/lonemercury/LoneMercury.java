@@ -14,6 +14,8 @@ import com.kilobolt.framework.implementation.AndroidGame;
 
 public class LoneMercury extends AndroidGame
 {
+	// Android game hardcoded at 1280 x 800, later scaled at final paint.
+
 	public static String scrollText;
 	boolean assetsLoaded = false;
 
@@ -35,7 +37,7 @@ public class LoneMercury extends AndroidGame
 	@Override
 	public void onBackPressed( )
 	{
-		getCurrentScreen( ).backButton( );
+		android.os.Process.killProcess( android.os.Process.myPid() );
 	}
 
 	/*
@@ -45,7 +47,7 @@ public class LoneMercury extends AndroidGame
 		StringBuilder stringBuilder = new StringBuilder();
 
 		String line = null;
-		
+
 		try
 		{
 			while( ( line = reader.readLine() ) != null )
@@ -68,7 +70,7 @@ public class LoneMercury extends AndroidGame
 				Log.w( "LOG", e.getMessage() );
 			}
 		}
-		
+
 		return stringBuilder.toString();
 	}
 	*/
@@ -104,10 +106,5 @@ public class LoneMercury extends AndroidGame
 				System.out.println( "Portrait" );
 			}
 		}
-	}
-
-	public void end()
-	{
-		android.os.Process.killProcess( android.os.Process.myPid() );
 	}
 }
