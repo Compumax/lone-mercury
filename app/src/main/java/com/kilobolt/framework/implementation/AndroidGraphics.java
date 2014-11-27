@@ -64,12 +64,13 @@ public class AndroidGraphics implements Graphics
 			bitmap = BitmapFactory.decodeStream( in, null, options );
 			if( bitmap == null )
 			{
-				throw new RuntimeException( "Couldn't load bitmap from asset '" + fileName + "'" );
+				throw new RuntimeException( "Couldn't load bitmap from asset '" + fileName + "'. Bitmap is null." );
 			}
 		}
 		catch( IOException e )
 		{
-			throw new RuntimeException( "Couldn't load bitmap from asset '" + fileName + "'" );
+			e.printStackTrace();
+			throw new RuntimeException( "Couldn't load bitmap from asset '" + fileName + "'. Catched IOException." );
 		}
 		finally
 		{
