@@ -29,7 +29,7 @@ public class Assets
 		System.out.println( "Before GfxLoad" );
 
 		Graphics gfx = loneMercury.getGraphics( );
-		Assets.planet = gfx.newImage( "img/planet.png", ImageFormat.ARGB4444 );
+		Assets.planet = gfx.newImage( "img/planet.png", ImageFormat.ARGB8888 );
 
 		System.out.println( "Before Sleep" );
 
