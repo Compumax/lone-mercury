@@ -50,6 +50,7 @@ public class ScreenDemo extends Screen
 		mercury.targetPosition.centerX = 640;
 		mercury.targetPosition.centerY = 400;
 		mercury.targetPosition.time = 30;
+		mercury.image = Assets.planet;
 
 		/*
 		mercury.image = Assets.planet;

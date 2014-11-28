@@ -2,8 +2,12 @@ package com.dsitelecom.xmontero.compumax.lonemercury;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+
+import com.kilobolt.framework.Image;
+import com.kilobolt.framework.implementation.AndroidImage;
 
 public class Blob
 {
@@ -20,6 +24,8 @@ public class Blob
 	public BlobVector currentPosition = new BlobVector();
 	public BlobVector targetPosition = new BlobVector();
 	public InterpolationMode interpolationMode = InterpolationMode.Linear;
+
+	public Image image;
 
 	public Blob( String name )
 	{
@@ -55,17 +61,22 @@ public class Blob
 			int x = Math.round( currentPosition.centerX );
 			int y = Math.round( currentPosition.centerY );
 
+			Matrix matrix = new Matrix();
+			matrix.postRotate( ( ( float ) Math.random() ) * 30, image.getWidth() / 2, image.getHeight() / 2 );
+			matrix.postTranslate( currentPosition.centerX - image.getWidth() / 2, currentPosition.centerY - image.getHeight() / 2 );
+
+			canvas.drawBitmap( ( ( AndroidImage ) image ).bitmap, matrix, paint );
 			canvas.drawRect( x - getWidth() / 2, y - getHeight() / 2, x + getWidth() / 2, y + getHeight() / 2, paint );
 		}
 	}
 
 	public int getWidth()
 	{
-		return 100;
+		return image.getWidth();
 	}
 
 	public int getHeight()
 	{
-		return 100;
+		return image.getHeight();
 	}
 }

@@ -7,8 +7,8 @@ import com.kilobolt.framework.Graphics.ImageFormat;
 
 public class AndroidImage implements Image
 {
-	Bitmap bitmap;
-	ImageFormat format;
+	public Bitmap bitmap;
+	public ImageFormat format;
 
 	public AndroidImage( Bitmap bitmap, ImageFormat format )
 	{
